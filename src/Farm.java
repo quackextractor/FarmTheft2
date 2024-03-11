@@ -20,7 +20,33 @@ public class Farm {
         }
     }
 
-    public void waterFlower() {
+    public double calculateChanceOfGrowth(Flower flower) {
+        double chance = flower.chanceOfGrowth;
+
+        chance += 30;
+        if (chance > 100) {
+            chance = 100;
+        }
+        return chance;
+    }
+
+    public void waterFlower(String targetFlowerName) {
+
+        boolean hasFoundFlowers = false;
+        for (Flower flower : flowers
+        ) {
+            if (flower.name.equals(targetFlowerName)) {
+                if (flower.chanceOfGrowth >= 100) {
+                    throw new UnsupportedOperationException("Flower does not need watering.");
+                } else {
+                    flower.chanceOfGrowth = calculateChanceOfGrowth(flower);
+                    hasFoundFlowers = true;
+                }
+            }
+        }
+        if (!hasFoundFlowers){
+            throw new UnsupportedOperationException("No such flower.");
+        }
     }
 
     public int getFlowerTypeMaxAmount() {
